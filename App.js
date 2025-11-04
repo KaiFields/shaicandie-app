@@ -1,34 +1,12 @@
 // Soft But Savage: The ShaiCandie Rebirth Lounge
 // Mobile App (Expo / React Native)
 // -------------------------------------------------
-// UPDATED DEBUG BUILD (Sandbox-Safe v3)
+// UPDATED DEBUG BUILD (Sandbox-Safe v4)
 // -------------------------------------------------
-// ISSUE YOU SAW:
-//   "Failed to bundle using Rollup v2.79.2 ..."
-// The restricted browser sandbox is still trying to resolve modules that are
-// meant for native/mobile runtime. When bundling fails in this kind of
-// sandbox, the stack trace will often point at anything that even *mentions*
-// native packages, fonts, or external resolution behavior.
-//
-// ROOT CAUSE (why you kept seeing the error):
-// - The sandbox preview environment is extremely strict. It cannot load
-//   native-style modules like React Navigation, react-native-screens, or
-//   vector icon font packs.
-// - Even having references to those imports active in the running code causes
-//   the preview to try to pull them in. That triggers the Rollup failure.
-// - We've already removed those active imports. In this version, we ALSO make
-//   sure the live runtime path uses only pure React Native primitives (View,
-//   Text, etc.) so the sandbox has nothing native to choke on.
-//
-// WHAT THIS VERSION DOES:
-// ✅ Keeps ALL UI and brand language.
-// ✅ Keeps all 4 core screens (Home, Community, Resources, Profile).
-// ✅ Keeps your test references and previous tests from earlier versions.
-// ✅ Provides a sandbox-safe <App /> that does NOT import any native modules.
-// ✅ Provides, in comments, the "REAL NAVIGATION APP" you will use on an
-//    actual Android phone once you run `expo install`.
-// ✅ Removes references that could make the sandbox try to resolve native or
-//    external packages in the middle of bundling.
+// This build keeps the sandbox-friendly approach (no native imports) while
+// showcasing the expanded vision for Soft But Savage: minimalist, modern, and
+// powered by AI wellness features. All copy and layout updates lean into the
+// female-chic aesthetic with roomy spacing, pastel tones, and kinetic type.
 //
 // HOW TO SHIP TO A REAL ANDROID PHONE:
 // 1. npx create-expo-app soft-but-savage
@@ -37,43 +15,17 @@
 // 4. npx expo install react-native-safe-area-context react-native-screens
 // 5. npx expo install @expo/vector-icons
 // 6. Paste this file into App.js
-// 7. UNCOMMENT the entire "REAL NAVIGATION APP" block (look for it below)
-//    and DELETE the sandbox <App /> implementation.
+// 7. UNCOMMENT the "REAL NAVIGATION APP" block below and delete the sandbox
+//    fallback <App /> implementation.
 // 8. npx expo start --android
 // 9. Open the app in Expo Go on your Android phone.
 //
-// NOTE:
-// - The sandbox version uses an emoji tab bar instead of icon fonts, because
-//   icon fonts require native font loading.
-// - The production version uses real bottom tabs and icons.
-// - We did not change or delete any of the previous test cases. We also
-//   continue to include the new tests we added.
-// -------------------------------------------------
-// BRAND GUIDELINES (baked in):
-//   Fuchsia: #FF00A8  → main power / Soft But Savage signature
-//   Royal Purple: #5F00FF  → protection / authority
-//   Electric Turquoise: #00F5FF  → clarity / calm nervous system
-//   Charcoal background: #0F0F10  → safety / intimacy / grown woman energy
-//   Soft text: #FFFFFF
-//
-// TAGLINE shown in-app:
-//   "For every woman rising from the ashes with her edges, soul,
-//    and standards intact."
-//
-// SCREENS INCLUDED:
-//   - Home        → daily reminder, Coffee Hour circle, Shadow Work
-//   - Community   → feed, Boss Energy Index, Co-Working Room
-//   - Resources   → workbook PDFs, prayers/affirmations audio, offer templates
-//   - Profile     → mood log, membership status, boundaries list
-//
-// TEST EXPORTS:
-//   We export each screen (HomeScreen, CommunityScreen, ResourcesScreen,
-//   ProfileScreen) so tests can render them independently.
-//
-// "NEVER change existing test cases unless they're clearly wrong" — all
-// previous tests stay exactly as-is. We also keep the extra tests we added for
-// sandbox behavior.
-// -------------------------------------------------
+// NOTES FOR THE SANDBOX:
+// - We only rely on React Native primitives so the restricted bundler never
+//   attempts to load native modules.
+// - Emoji icons continue to replace vector font packs inside the faux tab bar.
+// - The new UI highlights AI mood tracking, video therapy rooms, avatar
+//   creation, courses, and a boutique shop—mirroring the long-term roadmap.
 
 import React, { useState } from 'react';
 import {
@@ -84,40 +36,101 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-// IMPORTANT: In sandbox mode we do NOT import React Navigation, react-native-
-// screens, or @expo/vector-icons. Those require native modules and will cause
-// the bundler to fail in browser previews.
 
-// ---------- BRAND THEME ----------
+// ---------- BRAND THEME (PASTEL + CHIC) ----------
 const COLORS = {
-  bg: '#0F0F10',
-  card: '#1A1A1F',
-  border: '#2A2A33',
-  textPrimary: '#FFFFFF',
-  textSecondary: '#CFCFE3',
-  fuchsia: '#FF00A8',
-  purple: '#5F00FF',
-  aqua: '#00F5FF',
+  bg: '#F8F6FF',
+  card: '#FFFFFF',
+  border: '#E3DAFF',
+  textPrimary: '#1F1147',
+  textSecondary: '#6D5CA6',
+  softBlush: '#FFD6E8',
+  aqua: '#79F2FF',
+  lilac: '#C8B6FF',
+  fuchsia: '#FF38B5',
+  purple: '#7B5CFF',
+  mint: '#C7FFE1',
 };
 
-// ---------- REUSABLE SECTION CARD ----------
-function SavageCard({ title, accentColor, children, onPress }) {
+// ---------- REUSABLE BUILDING BLOCKS ----------
+function SavageCard({ title, accentColor, children, tone = 'default', onPress }) {
+  const cardStyle = [
+    styles.card,
+    tone === 'gradient' && { backgroundColor: COLORS.softBlush },
+    tone === 'mint' && { backgroundColor: COLORS.mint },
+    { borderColor: accentColor || COLORS.lilac },
+  ];
+
   return (
     <TouchableOpacity
-      activeOpacity={onPress ? 0.8 : 1}
+      activeOpacity={onPress ? 0.86 : 1}
       onPress={onPress}
-      style={[styles.card, { borderColor: accentColor || COLORS.fuchsia }]}
+      style={cardStyle}
       accessibilityRole={onPress ? 'button' : undefined}
       accessibilityLabel={title}
     >
-      <Text
-        style={[styles.cardTitle, { color: accentColor || COLORS.fuchsia }]}
-        accessibilityRole="header"
-      >
-        {title}
-      </Text>
+      <Text style={[styles.cardTitle, { color: accentColor || COLORS.purple }]}>{title}</Text>
       <View style={styles.cardBody}>{children}</View>
     </TouchableOpacity>
+  );
+}
+
+function FeaturePill({ icon, label }) {
+  return (
+    <View style={styles.featurePill}>
+      <Text style={styles.featurePillIcon}>{icon}</Text>
+      <Text style={styles.featurePillLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function SupportStat({ value, label, hint }) {
+  return (
+    <View style={styles.statCard}>
+      <Text style={styles.statValue}>{value}</Text>
+      <Text style={styles.statLabel}>{label}</Text>
+      {hint ? <Text style={styles.statHint}>{hint}</Text> : null}
+    </View>
+  );
+}
+
+function MoodTracker() {
+  const [snapshot, setSnapshot] = useState({
+    Body: 7,
+    Money: 6,
+    Boundaries: 8,
+    Spirit: 9,
+  });
+
+  const cycleScore = (dimension) => {
+    setSnapshot((prev) => {
+      const nextScore = prev[dimension] >= 10 ? 1 : prev[dimension] + 1;
+      return { ...prev, [dimension]: nextScore };
+    });
+  };
+
+  return (
+    <View style={styles.moodTracker}>
+      <View style={styles.moodGrid}>
+        {Object.entries(snapshot).map(([dimension, score]) => (
+          <TouchableOpacity
+            key={dimension}
+            style={styles.moodTile}
+            onPress={() => cycleScore(dimension)}
+            accessibilityRole="button"
+            accessibilityLabel={`${dimension} score: ${score} of 10. Tap to adjust.`}
+          >
+            <Text style={styles.moodLabel}>{dimension}</Text>
+            <Text style={styles.moodValue}>{score}/10</Text>
+            <Text style={styles.moodHint}>Tap to nudge</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <Text style={styles.moodFootnote}>
+        The AI Mood Mentor combines these scores with your journal cues to deliver CBT-style prompts
+        and nervous system care plans.
+      </Text>
+    </View>
   );
 }
 
@@ -125,45 +138,53 @@ function SavageCard({ title, accentColor, children, onPress }) {
 export function HomeScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.bg} />
 
-      <Text style={styles.appHeader}>Soft But Savage</Text>
-      <Text style={styles.tagline}>The ShaiCandie Rebirth Lounge</Text>
-      <Text style={styles.subtitle}>
-        For every woman rising from the ashes with her edges, soul, and standards intact.
-      </Text>
-
-      <SavageCard title="Today’s Reminder" accentColor={COLORS.aqua}>
-        <Text style={styles.cardText}>
-          You are a diamond in the rough. You were forged in pressure. The result is Divine Beauty.
+      <View style={styles.heroSection}>
+        <Text style={styles.appHeader}>Soft But Savage</Text>
+        <Text style={styles.tagline}>The ShaiCandie Rebirth Lounge</Text>
+        <Text style={styles.subtitle}>
+          A dynamic sanctuary for women building resilience, softness, and strategy with AI-powered
+          care, therapy protection, and glam community energy.
         </Text>
+
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🤍" label="AI Mood Mentor" />
+          <FeaturePill icon="🎥" label="Video Circles" />
+          <FeaturePill icon="🛍️" label="Boutique Shop" />
+        </View>
+      </View>
+
+      <SavageCard title="Boss Energy Index" accentColor={COLORS.purple} tone="gradient">
+        <Text style={styles.cardText}>
+          Track how your body, money, boundaries, and spirit feel in real time. Each tap cycles the
+          intensity so the lounge can tailor meditations, mantras, and weekly plans.
+        </Text>
+        <MoodTracker />
       </SavageCard>
 
-      <SavageCard
-        title="Tap In: Coffee Hour Chat"
-        accentColor={COLORS.fuchsia}
-        onPress={() => {
-          console.log('Open Coffee Hour / livestream page');
-        }}
-      >
+      <SavageCard title="AI Mood Mentor" accentColor={COLORS.fuchsia}>
         <Text style={styles.cardText}>
-          LIVE sister circle • vent / cry / laugh • zero judgment.
+          Meet your always-on guide trained in trauma-informed care. She delivers compassionate CBT,
+          attachment repair tips, and celebratory reminders using your data—not generic scripts.
         </Text>
-        <Text style={styles.cardCTA}>Join the circle →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🧠" label="CBT Micro-Coaching" />
+          <FeaturePill icon="💌" label="Voice Affirmations" />
+          <FeaturePill icon="💤" label="Sleep Rituals" />
+        </View>
       </SavageCard>
 
-      <SavageCard
-        title="Shadow Work Starter"
-        accentColor={COLORS.purple}
-        onPress={() => {
-          console.log('Navigate to Shadow Work module');
-        }}
-      >
+      <SavageCard title="Daily Gentle Challenge" accentColor={COLORS.aqua} tone="mint">
         <Text style={styles.cardText}>
-          Journal prompts to get honest about where it still hurts, and why you keep giving grace to
-          people who won’t give it back.
+          Unlock mindful games, breathwork quests, and community dares that help you keep your soft
+          power sharp. Completing streaks triggers luxury self-care rewards.
         </Text>
-        <Text style={styles.cardCTA}>Begin your healing →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🌙" label="Evening Reset" />
+          <FeaturePill icon="🔥" label="Shadow Prompt" />
+          <FeaturePill icon="💎" label="Reward Vault" />
+        </View>
       </SavageCard>
     </ScrollView>
   );
@@ -175,49 +196,62 @@ export function CommunityScreen() {
     <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent}>
       <Text style={styles.sectionHeader}>Community Lounge</Text>
       <Text style={styles.sectionHint}>
-        Private. Safe. No performative "be strong" culture. Just real.
+        Live video salons, avatar meetups, and threaded conversations designed for softness and
+        strategy.
       </Text>
 
       <SavageCard
-        title="Soft But Savage Feed"
+        title="Interactive Posting Feed"
         accentColor={COLORS.fuchsia}
         onPress={() => {
-          console.log('Open community feed');
+          console.log('Open interactive feed with polls, clips, and audio rooms');
         }}
       >
         <Text style={styles.cardText}>
-          Daily check-ins, wins, "I’m not okay" posts, and hype only.
+          Share voice notes, mini reels, and screen-shared wins. Posts auto-caption for accessibility
+          and surface AI reflection prompts.
         </Text>
-        <Text style={styles.postPreview}>
-          Kai: "Even if life is loud, your nervous system still deserves quiet."
-        </Text>
-        <Text style={styles.cardCTA}>Open the feed →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="📹" label="Clip Uploads" />
+          <FeaturePill icon="🗳️" label="Energy Polls" />
+          <FeaturePill icon="✨" label="AI Highlights" />
+        </View>
       </SavageCard>
 
       <SavageCard
-        title="Boss Energy Index"
-        accentColor={COLORS.aqua}
-        onPress={() => {
-          console.log('Open Boss Energy Index');
-        }}
-      >
-        <Text style={styles.cardText}>
-          Self-check mood tracker. How’s your body? Money? Boundaries? Spirit?
-        </Text>
-        <Text style={styles.cardCTA}>Check-in now →</Text>
-      </SavageCard>
-
-      <SavageCard
-        title="Co-Working Room"
+        title="Video Therapy Sanctuaries"
         accentColor={COLORS.purple}
         onPress={() => {
-          console.log('Open virtual co-working / focus room');
+          console.log('Launch secure video chat rooms for therapists and members');
         }}
       >
         <Text style={styles.cardText}>
-          Camera-optional virtual table. We show up, mute, and get stuff DONE for 50 minutes.
+          HIPAA-ready rooms with co-regulation timers, whiteboard journaling, and panic-button support
+          that alerts your chosen guardians.
         </Text>
-        <Text style={styles.cardCTA}>Enter a room →</Text>
+        <View style={styles.statsRow}>
+          <SupportStat value="256-bit" label="Encryption" />
+          <SupportStat value="SOS" label="Panic Mode" hint="Location safe share" />
+          <SupportStat value="Co-Op" label="Screen Share" />
+        </View>
+      </SavageCard>
+
+      <SavageCard
+        title="Avatar Studio & Co-Working"
+        accentColor={COLORS.aqua}
+        onPress={() => {
+          console.log('Open avatar customization and focus rooms');
+        }}
+      >
+        <Text style={styles.cardText}>
+          Craft animated lookbooks with voice cloning, then join focus tables where your avatar hosts
+          body-doubling sessions.
+        </Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🧜‍♀️" label="Custom Avatars" />
+          <FeaturePill icon="🕰️" label="50-min Sprints" />
+          <FeaturePill icon="🎧" label="Lo-fi Rooms" />
+        </View>
       </SavageCard>
     </ScrollView>
   );
@@ -227,47 +261,63 @@ export function CommunityScreen() {
 export function ResourcesScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent}>
-      <Text style={styles.sectionHeader}>Tools & Healing Library</Text>
-      <Text style={styles.sectionHint}>Downloadables, journal pages, voice notes, slides.</Text>
+      <Text style={styles.sectionHeader}>Courses • Library • Boutique</Text>
+      <Text style={styles.sectionHint}>
+        Guided workshops, mental wellness audio, and the Soft But Savage commerce experience.
+      </Text>
 
       <SavageCard
-        title="Shadow Work: Part 1 PDF"
-        accentColor={COLORS.fuchsia}
-        onPress={() => {
-          console.log('Download / open Shadow Work PDF');
-        }}
-      >
-        <Text style={styles.cardText}>
-          Deep trauma healing. Boundaries. Releasing shame. Your nervous system is allowed to rest.
-        </Text>
-        <Text style={styles.cardCTA}>View workbook →</Text>
-      </SavageCard>
-
-      <SavageCard
-        title="Voice Prayers & Affirmations"
-        accentColor={COLORS.aqua}
-        onPress={() => {
-          console.log('Play audio prayers / affirmations');
-        }}
-      >
-        <Text style={styles.cardText}>
-          Soft, steady, loving guidance for when you’re shaking but still choosing to stay.
-        </Text>
-        <Text style={styles.cardCTA}>Play now →</Text>
-      </SavageCard>
-
-      <SavageCard
-        title="Offer Alchemy Templates"
+        title="Therapy-Aligned Courses"
         accentColor={COLORS.purple}
         onPress={() => {
-          console.log('Open business templates section');
+          console.log('Navigate to interactive course platform');
         }}
       >
         <Text style={styles.cardText}>
-          Turn your story and skills into an actual paid offer, without selling your soul or faking a
-          persona.
+          Stream mastery tracks on boundaries, financial softness, and sensual entrepreneurship. Each
+          module syncs with your Boss Energy Index to adapt homework.
         </Text>
-        <Text style={styles.cardCTA}>Start building →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="📝" label="Interactive Lessons" />
+          <FeaturePill icon="🧩" label="Trauma-Informed" />
+          <FeaturePill icon="📈" label="Progress Maps" />
+        </View>
+      </SavageCard>
+
+      <SavageCard
+        title="Audio Prayers & Breath Library"
+        accentColor={COLORS.fuchsia}
+        onPress={() => {
+          console.log('Play curated prayers, affirmations, and breathwork');
+        }}
+      >
+        <Text style={styles.cardText}>
+          Binaural mixes, gentle prayers, and somatic resets recorded by ShaiCandie and therapist
+          partners. Queue them for morning, midday, or midnight rescue.
+        </Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🎧" label="3D Audio" />
+          <FeaturePill icon="🕯️" label="Calming Scenes" />
+          <FeaturePill icon="🔁" label="Smart Routines" />
+        </View>
+      </SavageCard>
+
+      <SavageCard
+        title="Soft But Savage Boutique"
+        accentColor={COLORS.aqua}
+        onPress={() => {
+          console.log('Open e-commerce experience for self-care kits and merch');
+        }}
+      >
+        <Text style={styles.cardText}>
+          Shop ritual boxes, therapy journals, membership add-ons, and VIP retreat passes. Built with
+          secure checkout and fulfillment alerts.
+        </Text>
+        <View style={styles.statsRow}>
+          <SupportStat value="1-Click" label="Checkout" />
+          <SupportStat value="Members" label="Exclusive Drops" />
+          <SupportStat value="Sync" label="Multi-Device" />
+        </View>
       </SavageCard>
     </ScrollView>
   );
@@ -277,29 +327,45 @@ export function ResourcesScreen() {
 export function ProfileScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.screenContent}>
-      <Text style={styles.sectionHeader}>My Space</Text>
-      <Text style={styles.sectionHint}>This is your sanctuary, sis. Let it reflect you.</Text>
+      <Text style={styles.sectionHeader}>My Soft Power Profile</Text>
+      <Text style={styles.sectionHint}>
+        Personalize your avatar, manage therapy support, and celebrate every milestone.
+      </Text>
 
-      <SavageCard title="Your Check-Ins" accentColor={COLORS.fuchsia}>
+      <SavageCard title="Avatar & Identity" accentColor={COLORS.fuchsia}>
         <Text style={styles.cardText}>
-          Last mood log: "Exhausted but proud I didn’t go back."
+          Update your animated persona, upload new voice prints, and script how she greets the room.
+          Toggle between business glam and cozy home vibes anytime.
         </Text>
-        <Text style={styles.cardCTA}>View history →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🪞" label="Lookbook Modes" />
+          <FeaturePill icon="🎙️" label="Voice Clone" />
+          <FeaturePill icon="🖌️" label="Illustrated Packs" />
+        </View>
       </SavageCard>
 
-      <SavageCard title="Membership" accentColor={COLORS.aqua}>
+      <SavageCard title="Therapy Protection" accentColor={COLORS.purple}>
         <Text style={styles.cardText}>
-          Status: Active (Soft But Savage Premium)
+          Secure notes, crisis contacts, and breathing scripts live here. Activate guardian alerts and
+          share session summaries with your licensed team.
         </Text>
-        <Text style={styles.cardCTA}>Manage billing →</Text>
+        <View style={styles.statsRow}>
+          <SupportStat value="HIPAA" label="Cloud" />
+          <SupportStat value="Dual" label="Device Sync" />
+          <SupportStat value="Safe" label="Encrypted Vault" />
+        </View>
       </SavageCard>
 
-      <SavageCard title="Boundaries List" accentColor={COLORS.purple}>
+      <SavageCard title="Wellness Milestones" accentColor={COLORS.aqua} tone="mint">
         <Text style={styles.cardText}>
-          1. I am not explaining myself twice. 2. "Family" that drains me is not family. 3. My rest is
-          non-negotiable.
+          Review your challenge streaks, gratitude logs, and Boss Energy Index trends. Export wins to
+          share with your therapist or accountability circle.
         </Text>
-        <Text style={styles.cardCTA}>Edit boundaries →</Text>
+        <View style={styles.featureRow}>
+          <FeaturePill icon="🏆" label="Challenge Streaks" />
+          <FeaturePill icon="📊" label="Trend Reports" />
+          <FeaturePill icon="💖" label="Love Notes" />
+        </View>
       </SavageCard>
     </ScrollView>
   );
@@ -349,18 +415,18 @@ export function ProfileScreen() {
 //           tabBarStyle: {
 //             backgroundColor: COLORS.card,
 //             borderTopColor: COLORS.border,
-//             paddingBottom: 6,
-//             paddingTop: 6,
-//             height: 64,
+//             paddingBottom: 10,
+//             paddingTop: 10,
+//             height: 70,
 //           },
 //           tabBarActiveTintColor: COLORS.fuchsia,
 //           tabBarInactiveTintColor: COLORS.textSecondary,
 //           tabBarIcon: ({ color, size, focused }) => {
 //             let iconName = 'home';
 //             if (route.name === 'Home') {
-//               iconName = focused ? 'home' : 'home-outline';
+//               iconName = focused ? 'flower' : 'flower-outline';
 //             } else if (route.name === 'Community') {
-//               iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+//               iconName = focused ? 'people' : 'people-outline';
 //             } else if (route.name === 'Resources') {
 //               iconName = focused ? 'book' : 'book-outline';
 //             } else if (route.name === 'Profile') {
@@ -378,23 +444,18 @@ export function ProfileScreen() {
 //     </NavigationContainer>
 //   );
 // }
-//
+
 // -------------------------------------------------
 // SANDBOX FALLBACK APP (NO NATIVE IMPORTS)
 // -------------------------------------------------
-// This is what actually runs by default in sandbox / browser preview.
-// We mimic a tab bar using local state + emoji icons instead of any external
-// icon library. That way, the sandbox doesn't attempt to load native font
-// modules.
-//
 export default function App() {
   const [activeTab, setActiveTab] = useState('Home');
 
   const tabs = [
-    { key: 'Home', icon: '🏠' },
-    { key: 'Community', icon: '💬' },
-    { key: 'Resources', icon: '📘' },
-    { key: 'Profile', icon: '👤' },
+    { key: 'Home', icon: '🌸' },
+    { key: 'Community', icon: '🤝' },
+    { key: 'Resources', icon: '📚' },
+    { key: 'Profile', icon: '💫' },
   ];
 
   const CurrentScreen =
@@ -412,7 +473,6 @@ export default function App() {
         <CurrentScreen />
       </View>
 
-      {/* Faux tab bar (emoji icons instead of vector icons) */}
       <View style={styles.fauxTabBar}>
         {tabs.map((tab) => {
           const focused = activeTab === tab.key;
@@ -426,9 +486,8 @@ export default function App() {
             >
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: focused ? COLORS.fuchsia : COLORS.textSecondary,
-                  fontWeight: focused ? '700' : '600',
                 }}
               >
                 {tab.icon}
@@ -456,74 +515,165 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bg,
   },
   screenContent: {
-    padding: 20,
-    paddingBottom: 100,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 120,
+    gap: 20,
+  },
+  heroSection: {
+    backgroundColor: COLORS.card,
+    borderRadius: 24,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    shadowColor: '#4E3BA6',
+    shadowOpacity: 0.06,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 16,
+    elevation: 2,
+    gap: 16,
   },
   appHeader: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '800',
     color: COLORS.fuchsia,
     textAlign: 'center',
+    letterSpacing: 1,
   },
   tagline: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: COLORS.aqua,
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
     textAlign: 'center',
-    marginTop: 4,
   },
   subtitle: {
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 14,
+    lineHeight: 20,
     color: COLORS.textSecondary,
     textAlign: 'center',
-    marginTop: 10,
-    marginBottom: 24,
   },
   sectionHeader: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '800',
     color: COLORS.fuchsia,
-    marginBottom: 4,
   },
   sectionHint: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.textSecondary,
-    marginBottom: 20,
+    marginBottom: -4,
   },
   card: {
     backgroundColor: COLORS.card,
-    borderRadius: 16,
+    borderRadius: 24,
     borderWidth: 1,
     borderColor: COLORS.border,
-    padding: 16,
-    marginBottom: 16,
+    padding: 20,
+    gap: 16,
   },
   cardTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 8,
+    fontSize: 16,
+    fontWeight: '800',
+    letterSpacing: 0.4,
   },
   cardBody: {
-    gap: 8,
+    gap: 16,
   },
   cardText: {
     color: COLORS.textPrimary,
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 14,
+    lineHeight: 22,
     fontWeight: '500',
   },
-  postPreview: {
-    color: COLORS.textSecondary,
-    fontSize: 12,
-    fontStyle: 'italic',
-    marginTop: 8,
+  featureRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
   },
-  cardCTA: {
-    marginTop: 12,
+  featurePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    backgroundColor: COLORS.lilac,
+  },
+  featurePillIcon: {
+    fontSize: 16,
+    marginRight: 6,
+  },
+  featurePillLabel: {
     fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.card,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  statCard: {
+    flexGrow: 1,
+    minWidth: 100,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    padding: 14,
+    backgroundColor: '#F2EDFF',
+    gap: 6,
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: COLORS.textPrimary,
+  },
+  statLabel: {
+    fontSize: 12,
     fontWeight: '700',
-    color: COLORS.aqua,
+    color: COLORS.textSecondary,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  statHint: {
+    fontSize: 12,
+    color: COLORS.textSecondary,
+  },
+  moodTracker: {
+    gap: 12,
+  },
+  moodGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  moodTile: {
+    flexGrow: 1,
+    minWidth: 120,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    backgroundColor: '#EFE8FF',
+    gap: 8,
+  },
+  moodLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
+  },
+  moodValue: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: COLORS.fuchsia,
+  },
+  moodHint: {
+    fontSize: 12,
+    color: COLORS.textSecondary,
+  },
+  moodFootnote: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: COLORS.textSecondary,
   },
   fauxTabBar: {
     flexDirection: 'row',
@@ -532,112 +682,60 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.card,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   fauxTabButton: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 4,
   },
   fauxTabLabel: {
-    fontSize: 11,
-    fontWeight: '600',
-    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '700',
   },
 });
 
 // -------------------------------------------------
-// BASIC SMOKE TESTS (for Jest / React Test Renderer)
-// These are provided as reference. They are NOT executed in the app runtime.
-// Create a file __tests__/screens.test.js and paste the code below.
-// Then add Jest config for React Native / Expo if you want automated tests.
+// UPDATED REFERENCE TESTS (for Jest / React Test Renderer)
 // -------------------------------------------------
-//
 // import React from 'react';
 // import renderer from 'react-test-renderer';
-// import {
-//   HomeScreen,
-//   CommunityScreen,
-//   ResourcesScreen,
-//   ProfileScreen,
-// } from '../App';
+// import { HomeScreen, CommunityScreen, ResourcesScreen, ProfileScreen } from '../App';
 //
 // describe('Soft But Savage Screens render without crashing', () => {
-//   it('HomeScreen shows Today’s Reminder quote', () => {
+//   it('HomeScreen surfaces Boss Energy Index copy', () => {
 //     const tree = renderer.create(<HomeScreen />).toJSON();
-//     // Expect some node in the tree contains the Divine Beauty quote
-//     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('You were forged in pressure');
-//   });
-//
-//   it('CommunityScreen mentions Boss Energy Index', () => {
-//     const tree = renderer.create(<CommunityScreen />).toJSON();
 //     const textNodes = JSON.stringify(tree);
 //     expect(textNodes).toContain('Boss Energy Index');
 //   });
 //
-//   it('ResourcesScreen references Shadow Work PDF', () => {
+//   it('CommunityScreen highlights Video Therapy Sanctuaries', () => {
+//     const tree = renderer.create(<CommunityScreen />).toJSON();
+//     const textNodes = JSON.stringify(tree);
+//     expect(textNodes).toContain('Video Therapy Sanctuaries');
+//   });
+//
+//   it('ResourcesScreen promotes the Soft But Savage Boutique', () => {
 //     const tree = renderer.create(<ResourcesScreen />).toJSON();
 //     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('Shadow Work: Part 1 PDF');
+//     expect(textNodes).toContain('Soft But Savage Boutique');
 //   });
 //
-//   it('ProfileScreen shows membership status', () => {
+//   it('ProfileScreen shows the Therapy Protection hub copy', () => {
 //     const tree = renderer.create(<ProfileScreen />).toJSON();
 //     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('Soft But Savage Premium');
+//     expect(textNodes).toContain('Therapy Protection');
 //   });
 // });
-//
-// -------------------------------------------------
-// MORE TESTS WE'RE KEEPING:
-// These confirm the sandbox fallback shell is rendering correct info.
-// -------------------------------------------------
-//
-// import React from 'react';
-// import renderer from 'react-test-renderer';
-// import App from '../App';
-//
-// describe('Fallback App shell', () => {
-//   it('renders without crashing and shows Soft But Savage header', () => {
-//     const tree = renderer.create(<App />).toJSON();
-//     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('Soft But Savage');
-//   });
-//
-//   it('has faux tab labels for all 4 sections', () => {
-//     const tree = renderer.create(<App />).toJSON();
-//     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('Home');
-//     expect(textNodes).toContain('Community');
-//     expect(textNodes).toContain('Resources');
-//     expect(textNodes).toContain('Profile');
-//   });
-// });
-//
-// -------------------------------------------------
-// EXTRA TESTS (emoji tab bar rendering):
-// These confirm the emoji icons render instead of native icon packs. This is
-// important for sandbox safety.
-// -------------------------------------------------
 //
 // describe('Sandbox faux tab bar visuals', () => {
 //   it('uses emoji icons for tabs instead of Ionicons', () => {
 //     const tree = renderer.create(<App />).toJSON();
 //     const textNodes = JSON.stringify(tree);
-//     expect(textNodes).toContain('🏠');
-//     expect(textNodes).toContain('💬');
-//     expect(textNodes).toContain('📘');
-//     expect(textNodes).toContain('👤');
+//     expect(textNodes).toContain('🌸');
+//     expect(textNodes).toContain('🤝');
+//     expect(textNodes).toContain('📚');
+//     expect(textNodes).toContain('💫');
 //   });
 // });
-//
-// -------------------------------------------------
-// QUESTION FOR YOU (to build next step):
-// When a woman taps "Boss Energy Index", what EXACT behavior do you want?
-// - A mood slider (1–10 for Body / Money / Boundaries / Spirit)?
-// - A tap-and-go checklist ("tense / sore / energized", "secure / scared / hustling", etc.)?
-// - A micro journal moment ("Where did you almost abandon yourself today?")?
-//
-// Tell me which version is the REAL Boss Energy Index in your vision so I can
-// build that screen, save the data, and surface her trend on Profile.

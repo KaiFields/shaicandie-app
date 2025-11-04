@@ -1,21 +1,26 @@
 # Soft But Savage Sandbox App
 
-This repo contains the sandbox-friendly Expo/React Native experience for **Soft But Savage: The ShaiCandie Rebirth Lounge**. The code ships with:
+This repo contains the sandbox-friendly Expo/React Native experience for **Soft But Savage: The ShaiCandie Rebirth Lounge**. The latest build keeps the restricted-environment safeguards while showcasing the full product vision—AI mood care, therapy-grade video sanctuaries, avatar storytelling, courses, and boutique commerce—all wrapped in a minimalist, feminine-chic aesthetic.
 
-- Four themed screens (Home, Community, Resources, Profile) that match the brand language.
-- A reusable `SavageCard` component for consistent styling and accessibility.
-- A sandbox fallback shell that avoids native module imports so it can render in restricted preview environments.
-- A commented "real navigation" implementation you can enable when running on a physical device.
+## Feature Highlights
+
+- **AI Mood Mentor & Boss Energy Index** – tap-to-update mood snapshots (Body, Money, Boundaries, Spirit) that fuel CBT prompts, breathwork rituals, and personalized celebrations.
+- **Video Therapy Sanctuaries** – secure, HIPAA-ready rooms with co-regulation timers, screen sharing, panic-button support, and encryption stats to reassure members.
+- **Interactive Community Feed** – voice notes, polls, screen-shared wins, and AI-highlighted recaps keep the lounge vibrant without losing emotional safety.
+- **Avatar Studio & Co-Working** – craft animated identities, clone voices, and host body-doubling focus sprints alongside lo-fi soundscapes.
+- **Therapy-Aligned Courses** – adaptive lessons for boundaries, financial softness, and sensual entrepreneurship that sync with Boss Energy Index trends.
+- **Soft But Savage Boutique** – curated self-care kits, membership upgrades, and retreat passes offered through a secure, multi-device shopfront.
+- **Wellness Milestones Dashboard** – track challenge streaks, gratitude notes, and therapy wins in one exportable profile hub.
 
 ## Getting Started in the Sandbox
 
 1. Ensure you have Node.js 18+ installed locally.
-2. Install Expo CLI if you want to run it locally: `npm install -g expo-cli` (optional for sandbox preview).
-3. Start the Expo web preview with `npx expo start --web`. The sandbox-safe emoji tab bar will render without native dependencies.
+2. Optionally install Expo CLI: `npm install -g expo-cli`.
+3. Start the Expo web preview with `npx expo start --web`. The sandbox-safe emoji tab bar renders without any native dependencies.
 
 ## Shipping to a Real Android Device
 
-When you are ready to test on hardware, follow the steps embedded at the top of `App.js`:
+Follow the embedded checklist at the top of `App.js` when you are ready for hardware:
 
 1. `npx create-expo-app soft-but-savage`
 2. `cd soft-but-savage`
@@ -29,9 +34,15 @@ When you are ready to test on hardware, follow the steps embedded at the top of 
 5. Uncomment the "REAL NAVIGATION APP" block and delete the sandbox fallback `<App />`.
 6. Run `npx expo start --android` and open the project in Expo Go on your device.
 
+## Visual + UX Notes
+
+- Pastel backgrounds, generous spacing, and bold typographic accents match the Soft But Savage brand personality.
+- Emoji-based feature pills nod to real integrations (AI mentor, video chat, boutique) without importing native icon packs.
+- The `MoodTracker` component gives stakeholders a tangible feel for the Boss Energy Index interaction before wiring up persistence.
+
 ## Tests You Can Add
 
-The bottom of `App.js` contains reference Jest smoke tests that validate each screen and the faux tab bar. To run them:
+The bottom of `App.js` contains updated reference Jest smoke tests that align with the new copy. To run them:
 
 1. Install Jest and React Test Renderer:
    ```bash
@@ -41,10 +52,9 @@ The bottom of `App.js` contains reference Jest smoke tests that validate each sc
 3. Add a Jest configuration compatible with Expo/React Native (e.g., using `jest-expo`).
 4. Execute `npx jest` to confirm everything renders as expected.
 
-## Next Feature Ideas
+## Next Steps
 
-- Decide on the exact interaction for the **Boss Energy Index** (slider, checklist, or micro journal) so the screen can capture and surface trends.
-- Layer in persistence (AsyncStorage or backend sync) once the interaction model is chosen.
-- Introduce analytics or mood insights on the Profile screen after the data flow is defined.
-
-Refer to the inline question near the end of `App.js` to clarify the Boss Energy Index behavior before we build it out.
+- Hook the Boss Energy Index to persistent storage (AsyncStorage, Supabase, etc.) so AI prompts and therapy plans reflect real history.
+- Scope the integrations for video chat (e.g., Twilio, Vonage) and avatar generation (D-ID, VEED) to meet privacy requirements.
+- Finalize crisis-response flows, including guardian notifications and location handoff rules, to complete therapy protection compliance.
+- Pair designers with motion/illustration talent for bespoke avatar packs and onboarding micro-interactions.
