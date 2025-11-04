@@ -54,7 +54,34 @@ The bottom of `App.js` contains updated reference Jest smoke tests that align wi
 
 ## Next Steps
 
-- Hook the Boss Energy Index to persistent storage (AsyncStorage, Supabase, etc.) so AI prompts and therapy plans reflect real history.
-- Scope the integrations for video chat (e.g., Twilio, Vonage) and avatar generation (D-ID, VEED) to meet privacy requirements.
-- Finalize crisis-response flows, including guardian notifications and location handoff rules, to complete therapy protection compliance.
-- Pair designers with motion/illustration talent for bespoke avatar packs and onboarding micro-interactions.
+### 1. Immediate Builder Checklist
+
+- [ ] Stand up a lightweight backend (Supabase, Firebase, or Hasura) with secure auth so the Boss Energy Index and journal data have a real store.
+- [ ] Define the user data model (profile, avatar assets, wellness logs, purchase history) and map the API contracts that the mobile app will consume.
+- [ ] Wire the `MoodTracker` interactions to that API so state persists between sessions and can feed the AI mentor.
+
+### 2. AI & Therapy Foundations
+
+- [ ] Prototype the AI Mood Mentor with OpenAI or Anthropic, including guardrails for crisis phrases and a visible “escalate to human” affordance.
+- [ ] Select a HIPAA-ready provider (e.g., AWS HealthLake, Google Cloud Healthcare API) for storing therapy session summaries and consent records.
+- [ ] Document escalation playbooks (panic button routing, emergency contact policy) and surface them in both the product and ops runbooks.
+
+### 3. Real-Time Experiences
+
+- [ ] Evaluate video SDKs (Twilio Live, Vonage, Daily.co) for secure one-on-one therapy and multi-member lounges, noting HIPAA BAAs and cost models.
+- [ ] Design the architecture for community posts and livestream chat, including moderation tooling and retention policies.
+- [ ] Scope the avatar pipeline (e.g., D-ID or VEED) and determine what rendering or voice assets must be cached on device versus streamed.
+
+### 4. Courses & Commerce Rollout
+
+- [ ] Choose a course delivery stack (Thinkific, LearnWorlds, custom CMS) and define how lesson progress syncs with the Boss Energy Index.
+- [ ] Integrate a PCI-compliant commerce solution (Stripe, Shopify, ThriveCart) for kits, retreats, and membership upgrades.
+- [ ] Outline fulfillment and refund workflows so the boutique can scale without manual intervention.
+
+### 5. Design & Testing Ops
+
+- [ ] Expand the design system (Figma tokens, typography ramp, motion specs) to cover empty states, error feedback, and success celebrations.
+- [ ] Set up automated testing: Jest for component rendering, Detox for end-to-end flows, and static analysis (TypeScript or ESLint) for stability.
+- [ ] Plan a closed beta, including cohort selection, feedback forms, and analytics dashboards to monitor emotional safety signals.
+
+Keeping this checklist in your project tracker makes it easy to communicate progress with designers, engineers, and therapists as you bring each capability online.
