@@ -1,0 +1,16 @@
+export const COLORS = {
+  background: '#F8F6FF',
+  card: '#FFFFFF',
+  cardAlt: '#F2EDFF',
+  border: '#E3DAFF',
+  textPrimary: '#1F1147',
+  textSecondary: '#6D5CA6',
+  blush: '#FFD6E8',
+  mint: '#C7FFE1',
+  aqua: '#79F2FF',
+  lilac: '#C8B6FF',
+  fuchsia: '#FF38B5',
+  purple: '#7B5CFF',
+  success: '#39C6A5',
+  warning: '#FFB347',
+};
