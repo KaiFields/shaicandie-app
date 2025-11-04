@@ -9,6 +9,13 @@
     "assetBundlePatterns": ["**/*"],
     "web": {
       "bundler": "metro"
+    },
+    "extra": {
+      "authApiUrl": "${AUTH_API_URL}",
+      "mentorApiUrl": "${MENTOR_API_URL}",
+      "videoHostUrl": "${VIDEO_PROVIDER_URL}",
+      "commerceUrl": "${COMMERCE_URL}",
+      "sentryDsn": "${SENTRY_DSN}"
     }
   }
 }

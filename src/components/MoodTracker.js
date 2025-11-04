@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -6,8 +6,12 @@ import { COLORS } from '../theme/colors';
 
 const DIMENSIONS = ['Body', 'Money', 'Boundaries', 'Spirit'];
 
-export function MoodTracker({ initialScores = { Body: 7, Money: 6, Boundaries: 8, Spirit: 9 } }) {
+export function MoodTracker({ initialScores, onSnapshotChange }) {
   const [snapshot, setSnapshot] = useState(initialScores);
+
+  useEffect(() => {
+    setSnapshot(initialScores);
+  }, [initialScores]);
 
   const scoreAverage = useMemo(() => {
     const total = DIMENSIONS.reduce((sum, dimension) => sum + snapshot[dimension], 0);
@@ -17,7 +21,11 @@ export function MoodTracker({ initialScores = { Body: 7, Money: 6, Boundaries: 8
   const cycleScore = (dimension) => {
     setSnapshot((prev) => {
       const nextScore = prev[dimension] >= 10 ? 1 : prev[dimension] + 1;
-      return { ...prev, [dimension]: nextScore };
+      const nextSnapshot = { ...prev, [dimension]: nextScore };
+      if (onSnapshotChange) {
+        onSnapshotChange(nextSnapshot);
+      }
+      return nextSnapshot;
     });
   };
 
@@ -56,6 +64,12 @@ MoodTracker.propTypes = {
     Boundaries: PropTypes.number,
     Spirit: PropTypes.number,
   }),
+  onSnapshotChange: PropTypes.func,
+};
+
+MoodTracker.defaultProps = {
+  initialScores: { Body: 7, Money: 6, Boundaries: 8, Spirit: 9 },
+  onSnapshotChange: undefined,
 };
 
 const styles = StyleSheet.create({

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 
 import { COLORS } from '../theme/colors';
 
-export function SupportStat({ value, label, hint }) {
+export function SupportStat({ value, label, hint, suffix }) {
+  const displayValue = suffix ? `${value} ${suffix}` : value;
   return (
     <View style={styles.container}>
-      <Text style={styles.value}>{value}</Text>
+      <Text style={styles.value}>{displayValue}</Text>
       <Text style={styles.label}>{label}</Text>
       {hint ? <Text style={styles.hint}>{hint}</Text> : null}
     </View>
@@ -15,9 +16,15 @@ export function SupportStat({ value, label, hint }) {
 }
 
 SupportStat.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   hint: PropTypes.string,
+  suffix: PropTypes.string,
+};
+
+SupportStat.defaultProps = {
+  hint: undefined,
+  suffix: undefined,
 };
 
 const styles = StyleSheet.create({

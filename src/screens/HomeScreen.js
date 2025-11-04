@@ -2,10 +2,13 @@ import React from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 
 import { COLORS } from '../theme/colors';
-import { FeaturePill, MoodTracker, SavageCard } from '../components';
+import { FeaturePill, SavageCard, SupportStat, BossEnergyForm, AIMentorPanel } from '../components';
 import { HERO_FEATURES } from '../constants/featureData';
+import { useBossEnergy } from '../context/BossEnergyContext';
 
 export function HomeScreen() {
+  const { metrics } = useBossEnergy();
+
   return (
     <ScrollView
       style={styles.container}
@@ -31,32 +34,15 @@ export function HomeScreen() {
           Track how your body, money, boundaries, and spirit feel in real time. Each tap cycles the
           intensity so the lounge can tailor meditations, mantras, and weekly plans.
         </Text>
-        <MoodTracker />
+        <View style={styles.metricRow}>
+          <SupportStat label="Streak" value={`${metrics.streak} day${metrics.streak === 1 ? '' : 's'}`} />
+          <SupportStat label="Body" value={metrics.weeklyAverage.body} suffix="avg" />
+          <SupportStat label="Spirit" value={metrics.weeklyAverage.spirit} suffix="avg" />
+        </View>
+        <BossEnergyForm />
       </SavageCard>
 
-      <SavageCard title="AI Mood Mentor" accentColor={COLORS.fuchsia}>
-        <Text style={styles.bodyCopy}>
-          Meet your always-on guide trained in trauma-informed care. She delivers compassionate CBT,
-          attachment repair tips, and celebratory reminders using your data—not generic scripts.
-        </Text>
-        <View style={styles.pillRow}>
-          <FeaturePill icon="🧠" label="CBT Micro-Coaching" />
-          <FeaturePill icon="💌" label="Voice Affirmations" />
-          <FeaturePill icon="💤" label="Sleep Rituals" />
-        </View>
-      </SavageCard>
-
-      <SavageCard title="Daily Gentle Challenge" accentColor={COLORS.aqua} tone="mint">
-        <Text style={styles.bodyCopy}>
-          Unlock mindful games, breathwork quests, and community dares that help you keep your soft
-          power sharp. Completing streaks triggers luxury self-care rewards.
-        </Text>
-        <View style={styles.pillRow}>
-          <FeaturePill icon="🌙" label="Evening Reset" />
-          <FeaturePill icon="🔥" label="Shadow Prompt" />
-          <FeaturePill icon="💎" label="Reward Vault" />
-        </View>
-      </SavageCard>
+      <AIMentorPanel style={styles.mentor} />
     </ScrollView>
   );
 }
@@ -106,9 +92,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: COLORS.textPrimary,
   },
-  pillRow: {
+  metricRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
+    marginVertical: 8,
+  },
+  mentor: {
+    marginBottom: 24,
   },
 });

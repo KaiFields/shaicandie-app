@@ -121,3 +121,26 @@ export const PROFILE_FEATURES = [
     tone: 'mint',
   },
 ];
+
+export const BOSS_ENERGY_MILESTONES = [
+  {
+    id: 'shadow-breakthrough',
+    title: 'Named the pattern',
+    description: 'Called out the repeating loop and chose a new boundary in the moment.',
+  },
+  {
+    id: 'body-honored',
+    title: 'Honored my body',
+    description: 'Paused to stretch, hydrate, or rest when your nervous system asked.',
+  },
+  {
+    id: 'money-celebrated',
+    title: 'Money celebration',
+    description: 'Documented a win—invoice paid, budget kept, or savings added.',
+  },
+  {
+    id: 'sister-reached',
+    title: 'Reached for support',
+    description: 'You messaged the lounge or therapist instead of internalizing alone.',
+  },
+];

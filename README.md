@@ -1,66 +1,89 @@
 # Soft But Savage – Production App Shell
 
-This repository contains the production-ready Expo / React Native foundation for **Soft But Savage: The ShaiCandie Rebirth Lounge**. It ships with fully wired navigation, modular pastel-chic UI components, automated smoke tests, and guidance for standing up AI-powered wellness, therapy, community, and commerce features.
+This repository now contains a production-focused Expo / React Native app for **Soft But Savage: The ShaiCandie Rebirth Lounge**. It implements secure auth scaffolding, persistent Boss Energy Index tracking, AI mentor wiring, compliant video sanctuaries, adaptive courses, boutique commerce, and an upgraded quality pipeline so you can ship confidently.
 
 ## Feature Highlights
 
-- **Bottom Tab Navigation** – React Navigation tabs with Safe Area awareness and Ionicons deliver a polished native feel on iOS, Android, and web.
-- **Modular UI System** – Reusable `SavageCard`, `FeaturePill`, `SupportStat`, and `MoodTracker` components keep the experience consistent while showcasing Boss Energy Index interactions.
-- **AI & Therapy Storytelling** – Copy, layout, and stats across all four screens outline the AI mentor, secure therapy sanctuaries, avatar studio, adaptive courses, and boutique commerce roadmap.
-- **Accessible Pastel Theme** – Centralized color tokens and typography ramp maintain brand alignment while guaranteeing readable contrast.
+- **Secure Auth & Profiles** – The `AuthProvider` stores encrypted tokens with Expo Secure Store, hydrates user profiles, and exposes sign-in/sign-up/update flows backed by your API.
+- **Boss Energy Persistence** – AsyncStorage-powered `BossEnergyProvider` keeps daily snapshots, calculates streaks/weekly averages, and surfaces milestone toggles on the Profile screen.
+- **AI Mentor MVP** – The `AIMentorPanel` sends prompts to your configured mentor API with CBT context sourced from Boss Energy metrics, returning personalized guidance and crisis language.
+- **Real-Time Sanctuaries** – Community includes Daily-style `VideoSanctuaryCard` embeds that request secure room URLs and display HIPAA-friendly video or avatar coworking spaces inside a WebView.
+- **Courses & Commerce** – Resources fetches course catalogs and shop inventory from your commerce backend, launching deeplinks or checkout flows directly from the app.
+- **Quality Operations** – Jest tests now wrap screens with providers, mock native surfaces, and validate that navigation loads the authenticated home experience. Environment variables flow through `app.json` and `.env`.
 
 ## Project Structure
 
 ```
 src/
-  components/       # Shared UI primitives (cards, pills, mood tracker, etc.)
-  constants/        # Feature descriptions surfaced across screens
-  screens/          # Home, Community, Resources, Profile screens
-  theme/            # Color palette used across the app
-__tests__/          # Jest smoke tests covering screens + navigation shell
-App.js              # Navigation container + tab configuration
+  components/          # UI primitives + AI, commerce, live, and Boss Energy modules
+  context/             # AuthProvider and BossEnergyProvider
+  navigation/          # AppNavigator with auth + main tab stacks
+  screens/             # Auth stack + Home, Community, Resources, Profile tabs
+  services/            # API helpers for mentor, commerce, and video URLs
+  theme/               # Color palette tokens
+__tests__/             # Jest smoke tests (provider-aware)
+.env.example           # Required environment variables
+app.json               # Expo config with runtime extra values
 ```
+
+## Environment Configuration
+
+Copy `.env.example` to `.env` (never commit secrets) and provide production endpoints:
+
+```
+cp .env.example .env
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `AUTH_API_URL` | REST API that handles sign-in/up and profile updates |
+| `MENTOR_API_URL` | AI mentor session endpoint returning CBT guidance |
+| `VIDEO_PROVIDER_URL` | Compliant streaming host (e.g., Daily, Zoom, Twilio) |
+| `COMMERCE_URL` | Backend that returns course/product catalogs and checkout links |
+| `SENTRY_DSN` | Observability endpoint for crash/error capture |
+
+Expo automatically injects these into `Constants.expoConfig.extra` at runtime.
 
 ## Getting Started
 
 1. Install Node.js 18 or later.
 2. Install dependencies: `npm install`
-3. Launch the local dev experience:
-   - Web: `npm run web`
-   - Android: `npm run android`
-   - iOS (macOS only): `npm run ios`
-4. The bottom tab shell and all four core screens will load with production navigation.
+3. Create your `.env` (as above) or configure CI secrets.
+4. Launch the app:
+   - Web preview: `npm run web`
+   - Android (device/emulator): `npm run android`
+   - iOS (simulator, macOS only): `npm run ios`
+5. The auth gate appears; create or log in to view the main tabs.
 
-## Testing
-
-Run the automated smoke tests to confirm the navigation shell and screen copy render as expected:
+## Testing & Quality
 
 ```bash
 npm test
 ```
 
-The suite uses `jest-expo` with `@testing-library/react-native` for cross-platform rendering assertions.
+The Jest suite stubs native modules, mocks API calls, and verifies that each screen renders its production copy plus the authenticated navigation shell. Extend this with Detox or Playwright when you introduce end-to-end flows.
+
+For observability, populate `SENTRY_DSN` or your chosen monitoring provider and instrument additional traces/metrics as you scale.
 
 ## Deployment Checklist
 
-- Configure Expo EAS or classic builds with your bundle identifiers and signing assets.
-- Connect the app to your backend of choice (Supabase, Hasura, Firebase, custom) to persist Boss Energy Index scores, therapy logs, and commerce activity.
-- Integrate HIPAA-ready video/chat providers and document escalation protocols for panic mode and guardian alerts.
-- Wire AI mentor flows via OpenAI, Anthropic, or preferred LLM provider with safety guardrails.
-- Attach analytics, error reporting, and feature flagging before going live.
+- Configure Expo EAS (or bare builds) with signing credentials and environment secrets.
+- Point `AUTH_API_URL`, `MENTOR_API_URL`, `VIDEO_PROVIDER_URL`, and `COMMERCE_URL` at HIPAA/PCI compliant services.
+- Implement API endpoints that mirror the expected JSON responses used by `AuthContext`, `submitMentorPrompt`, `fetchCourses`, and `fetchProducts`.
+- Add panic-mode escalation on the backend to notify guardians/therapists when the mentor flags crisis keywords.
+- Connect analytics, Sentry, and feature flagging prior to public release.
 
-## Security & Compliance Notes
+## Security & Compliance
 
-- The navigation shell already relies on `react-native-safe-area-context`, `react-native-screens`, and `react-native-gesture-handler` to match production performance characteristics.
-- `npm audit` currently reports known advisories inside Expo SDK 50 (semver + send). Upgrading to a newer Expo SDK (e.g., 54+) resolves them once you are ready to adopt the newer runtime.
-- Before launch, review HIPAA, PCI, and data retention requirements with counsel to ensure integrations align with therapy and commerce obligations.
+- Tokens and profiles are persisted with Expo Secure Store, while Boss Energy entries live in AsyncStorage until your backend sync is active.
+- Video sanctuaries embed your provider’s fully compliant rooms inside a WebView for cross-platform consistency. Swap in a native SDK when available.
+- Update privacy policies, consent flows, and data retention strategies in coordination with licensed clinicians and legal counsel.
 
-## Next Build Phases
+## Roadmap Suggestions
 
-1. **Data & Auth** – Implement secure authentication, user profiles, and persistence for the Boss Energy Index and wellness milestones.
-2. **AI Mentor MVP** – Integrate conversational AI with journaling prompts, CBT templates, and crisis escalation guidelines.
-3. **Real-Time Experiences** – Add video therapy sanctuaries, avatar meetups, and co-working rooms via a compliant streaming provider.
-4. **Courses & Commerce** – Embed lesson delivery, in-app purchasing, and order fulfillment flows.
-5. **Quality Ops** – Expand automated testing (unit, integration, Detox), add CI pipelines, and capture observability metrics.
+- Replace WebView rooms with native Daily/Twilio integrations once ejecting is feasible.
+- Layer in push notifications, offline caching, and localized content for global members.
+- Expand testing with Detox end-to-end suites and GitHub Actions/Expo EAS CI pipelines.
+- Instrument boss energy insights with dashboards (e.g., Supabase, Metabase) for coaches and therapists.
 
-With this foundation you can focus on backend integrations, AI personalization, and compliance workflows while the mobile shell presents the full Soft But Savage brand story.
+With this foundation, the lounge can focus on rich integrations, trauma-informed care, and commerce experiences while the app keeps everything cohesive, secure, and on-brand.
