@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Soft But Savage",
+    "slug": "shaicandie-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+    "scheme": "shaicandie",
+    "assetBundlePatterns": ["**/*"],
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
