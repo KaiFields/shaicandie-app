@@ -1,0 +1,20 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "toggle_navigation": "Toggle navigation"
+  },
+  "general": {
+    "navigation": {
+      "main": "Main navigation"
+    }
+  },
+  "sections": {
+    "hero": {
+      "primary_button": "Explore the Collection",
+      "secondary_button": "Join the Lounge"
+    },
+    "newsletter": {
+      "success": "Thank you for subscribing!"
+    }
+  }
+}

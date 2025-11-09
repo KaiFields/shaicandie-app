@@ -1,0 +1,24 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 180) rotate(90) scale(180)">
+      <stop offset="0" stop-color="#FFE8C7" stop-opacity="0.92"/>
+      <stop offset="0.55" stop-color="#C75B7A" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#3A1B4D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flame" x1="200" y1="40" x2="200" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#712F79"/>
+      <stop offset="0.52" stop-color="#C75B7A"/>
+      <stop offset="1" stop-color="#FFD6A5"/>
+    </linearGradient>
+    <linearGradient id="silhouette" x1="130" y1="160" x2="260" y2="310" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#17091F"/>
+      <stop offset="1" stop-color="#3F204F"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#halo)"/>
+  <path d="M197 68C211 84 236 96 247 126C258 156 246 190 247 224C248 260 263 300 240 318C217 336 178 318 150 298C122 278 105 256 99 226C93 196 99 158 122 132C145 106 183 52 197 68Z" fill="url(#flame)" opacity="0.8"/>
+  <path d="M192 120C208 138 237 142 246 168C255 194 244 236 239 262C234 288 234 308 216 324C198 340 163 344 140 332C117 320 108 292 106 260C104 228 109 192 126 162C143 132 176 102 192 120Z" fill="url(#silhouette)"/>
+  <path d="M145 171C156 160 172 157 184 162C196 167 204 180 208 194C212 208 213 223 205 235C197 247 179 256 166 253C153 250 145 235 140 218C135 201 134 181 145 171Z" fill="#17091F" opacity="0.9"/>
+  <path d="M195 86C201 77 205 66 205 56C205 46 199 36 190 32C197 36 204 33 210 37C216 41 219 50 218 58C217 66 210 74 202 80L195 86Z" fill="#FFD6A5"/>
+  <path d="M218 100C229 97 241 95 251 100C261 105 268 118 267 132C266 146 257 162 245 168C233 174 218 170 206 162C194 154 184 142 180 129C176 116 180 100 190 93C200 86 217 87 218 100Z" fill="#F2A38F" opacity="0.65"/>
+</svg>

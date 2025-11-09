@@ -1,0 +1,68 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "settings": {
+        "gradient_start": "#140d1f",
+        "gradient_end": "#301337",
+        "accent": "#c75b7a",
+        "accent_strong": "#ffd6a5"
+      },
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_accent": "Soft",
+            "logo_text": "but Savage",
+            "menu": "main-menu",
+            "account_label": "My Account"
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "logo_accent": "Soft",
+            "logo_text": "but Savage",
+            "body": "Where the Shaicandie Rebirth Lounge celebrates the duality within every creative soul.",
+            "legal_text": "Soft but Savage — The Shaicandie Rebirth Lounge. All rights reserved."
+          },
+          "blocks": {
+            "footer-links-1": {
+              "type": "menu",
+              "settings": {
+                "heading": "Explore",
+                "menu": "",
+                "custom_links": "Shop|/collections/all\nBlog|/blogs/news\nEvents|/pages/events"
+              }
+            },
+            "footer-links-2": {
+              "type": "menu",
+              "settings": {
+                "heading": "Account",
+                "menu": "",
+                "custom_links": "Sign in|/account\nCreate account|/account/register\nWishlist|/pages/wishlist"
+              }
+            },
+            "footer-links-3": {
+              "type": "menu",
+              "settings": {
+                "heading": "Support",
+                "menu": "",
+                "custom_links": "FAQs|/pages/faq\nShipping & returns|/policies/shipping-policy\nContact|/pages/contact"
+              }
+            }
+          },
+          "block_order": [
+            "footer-links-1",
+            "footer-links-2",
+            "footer-links-3"
+          ]
+        }
+      },
+      "order": [
+        "header",
+        "footer"
+      ]
+    }
+  }
+}

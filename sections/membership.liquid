@@ -1,0 +1,173 @@
+<section class="account" id="membership" aria-labelledby="account-title-{{ section.id }}">
+  <div class="container account__grid">
+    <div class="account__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="account-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.body != blank %}
+        <p>{{ section.settings.body }}</p>
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+        <ul class="account__benefits">
+          {% for block in section.blocks %}
+            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="account__form-wrapper">
+      {% if section.settings.enable_form %}
+        {% form 'create_customer', class: 'account__form' %}
+          {% if form.posted_successfully? %}
+            <p class="form-success">{{ section.settings.success_message }}</p>
+          {% else %}
+            {% if form.errors %}
+              <div class="form-errors" role="alert">
+                <p>{{ 'templates.customers.register.form_error' | t }}</p>
+                <ul>
+                  {% for field in form.errors %}
+                    {% assign field_label = form.errors.translated_fields[field] | default: field %}
+                    <li>{{ field_label | capitalize }} {{ form.errors.messages[field] }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+            <div class="form-field">
+              <label for="RegisterForm-firstName-{{ section.id }}">{{ 'customer.register.first_name' | t }}</label>
+              <input id="RegisterForm-firstName-{{ section.id }}" type="text" name="customer[first_name]" value="{{ form.first_name }}" autocomplete="given-name" required>
+            </div>
+            <div class="form-field">
+              <label for="RegisterForm-lastName-{{ section.id }}">{{ 'customer.register.last_name' | t }}</label>
+              <input id="RegisterForm-lastName-{{ section.id }}" type="text" name="customer[last_name]" value="{{ form.last_name }}" autocomplete="family-name" required>
+            </div>
+            <div class="form-field">
+              <label for="RegisterForm-email-{{ section.id }}">{{ 'customer.register.email' | t }}</label>
+              <input id="RegisterForm-email-{{ section.id }}" type="email" name="customer[email]" value="{{ form.email }}" autocomplete="email" required>
+            </div>
+            <div class="form-field">
+              <label for="RegisterForm-tier-{{ section.id }}">{{ section.settings.tier_label }}</label>
+              <select id="RegisterForm-tier-{{ section.id }}" name="customer[note]">
+                {% for option in section.settings.tier_options | split: '\n' %}
+                  {% assign parts = option | split: '|' %}
+                  {% assign option_label = parts[0] | strip %}
+                  {% assign option_value = parts[1] | default: option_label | strip %}
+                  <option value="{{ option_value }}" {% if form.note == option_value %}selected{% endif %}>{{ option_label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="RegisterForm-password-{{ section.id }}">{{ 'customer.register.password' | t }}</label>
+              <input id="RegisterForm-password-{{ section.id }}" type="password" name="customer[password]" autocomplete="new-password" required>
+            </div>
+            {% if section.settings.require_terms %}
+              <div class="form-field form-field--inline">
+                <label class="checkbox" for="RegisterForm-terms-{{ section.id }}">
+                  <input id="RegisterForm-terms-{{ section.id }}" type="checkbox" required>
+                  <span>{{ section.settings.terms_label }}</span>
+                </label>
+              </div>
+            {% endif %}
+            <button class="btn btn--primary" type="submit">{{ section.settings.button_label }}</button>
+          {% endif %}
+        {% endform %}
+      {% else %}
+        <a class="btn btn--primary" href="{{ routes.account_register_url }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Membership",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Membership"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your portal to members-only rebirths"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Access personalized playlists, live sessions, and an intimate community forum. Track your purchases, save rituals, and earn rewards every time you show up for yourself."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_form",
+      "label": "Enable registration form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Create account"
+    },
+    {
+      "type": "text",
+      "id": "tier_label",
+      "label": "Tier field label",
+      "default": "Choose your tier"
+    },
+    {
+      "type": "textarea",
+      "id": "tier_options",
+      "label": "Tier options",
+      "info": "One option per line. Use the format Label|Value to save a different customer note value.",
+      "default": "Ember — Starter Access|Ember — Starter Access\nFlare — Community Circle|Flare — Community Circle\nPhoenix — Elite Experiences|Phoenix — Elite Experiences"
+    },
+    {
+      "type": "checkbox",
+      "id": "require_terms",
+      "label": "Require terms agreement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "terms_label",
+      "label": "Terms label",
+      "default": "I agree to the Soft but Savage terms."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Welcome to the Rebirth Lounge. Check your email to activate your account."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit",
+          "default": "Personal dashboards to follow your transformation cycles"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Membership",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}

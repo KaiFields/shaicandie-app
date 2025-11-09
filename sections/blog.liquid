@@ -1,0 +1,103 @@
+<section class="blog" id="blog" aria-labelledby="blog-title-{{ section.id }}">
+  <div class="container">
+    <div class="section-heading">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="blog-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.button_label != blank %}
+        <a class="btn btn--ghost" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+    <div class="card-grid card-grid--blog">
+      {% assign article_count = section.settings.article_count | default: 3 %}
+      {% assign blog = blogs[section.settings.blog] %}
+      {% if blog and blog.articles_count > 0 %}
+        {% for article in blog.articles limit: article_count %}
+          <article class="card card--blog">
+            <h3>{{ article.title }}</h3>
+            {% if article.excerpt != blank %}
+              <p>{{ article.excerpt | strip_html | truncate: 140 }}</p>
+            {% else %}
+              <p>{{ article.content | strip_html | truncate: 140 }}</p>
+            {% endif %}
+            <a class="link" href="{{ article.url }}">{{ section.settings.read_more_label }}</a>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="card card--blog">
+          <h3>Soft Power Rituals for the Modern Mystic</h3>
+          <p>Three nightly practices to keep your aura soft while your goals stay savage.</p>
+          <a class="link" href="/blogs/news">{{ section.settings.read_more_label }}</a>
+        </article>
+        <article class="card card--blog">
+          <h3>Behind the Flame: Founder Q&amp;A</h3>
+          <p>Shaicandie speaks on transformation, legacy, and crafting a lounge that heals and hypes.</p>
+          <a class="link" href="/blogs/news">{{ section.settings.read_more_label }}</a>
+        </article>
+        <article class="card card--blog">
+          <h3>Playlist: Rebirth Frequencies</h3>
+          <p>A sonic journey for journaling, manifesting, and celebrating your evolution.</p>
+          <a class="link" href="/blogs/news">{{ section.settings.read_more_label }}</a>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog highlight",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "article_count",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Articles to show",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "On the Journal"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Stories from the Rebirth Lounge"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label",
+      "default": "View all posts"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link",
+      "default": "/blogs/news"
+    },
+    {
+      "type": "text",
+      "id": "read_more_label",
+      "label": "Read more label",
+      "default": "Read more"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog highlight"
+    }
+  ]
+}
+{% endschema %}
