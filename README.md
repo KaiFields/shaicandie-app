@@ -20,6 +20,16 @@ A luminous Online Store 2.0 theme for Shopify that blends ethereal softness with
 
 Fonts are sourced from Google Fonts and additional customization is available through the Theme Editor (colors, content copy, menus, featured products, and more).
 
+### Quality checks
+
+Run the structural sanity check before committing to confirm all core Shopify assets and configuration files are present and va
+lid JSON:
+
+```bash
+npm install
+npm test
+```
+
 ## Structure
 
 - `layout/theme.liquid` — Base HTML shell that loads fonts, theme styles, and renders global header/footer sections.
