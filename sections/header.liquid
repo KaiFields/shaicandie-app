@@ -12,12 +12,10 @@
         <span class="sr-only">{{ 'accessibility.toggle_navigation' | t | default: 'Toggle navigation' }}</span>
       </button>
       <ul class="primary-nav__list" id="primary-nav__list-{{ section.id }}" aria-hidden="false">
-        {% assign menu_setting = section.settings.menu %}
-        {% if menu_setting != blank %}
-          {% assign menu_links = menu_setting.links %}
-          {% if menu_links == blank %}
-            {% assign menu_handle = menu_setting.handle | default: menu_setting %}
-            {% assign menu_links = linklists[menu_handle].links %}
+        {% if section.settings.menu != blank %}
+          {% assign menu_links = section.settings.menu.links %}
+          {% if menu_links == blank and linklists[section.settings.menu] %}
+            {% assign menu_links = linklists[section.settings.menu].links %}
           {% endif %}
           {% for link in menu_links %}
             <li>
