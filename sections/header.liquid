@@ -1,0 +1,73 @@
+<header class="site-header" role="banner">
+  <div class="container header__inner">
+    <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      <span class="logo__accent">{{ section.settings.logo_accent }}</span>
+      {{ section.settings.logo_text }}
+    </a>
+    <nav class="primary-nav" aria-label="{{ 'general.navigation.main' | t }}">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav__list-{{ section.id }}">
+        <span class="nav-toggle__line"></span>
+        <span class="nav-toggle__line"></span>
+        <span class="nav-toggle__line"></span>
+        <span class="sr-only">{{ 'accessibility.toggle_navigation' | t | default: 'Toggle navigation' }}</span>
+      </button>
+      <ul class="primary-nav__list" id="primary-nav__list-{{ section.id }}" aria-hidden="false">
+        {% if section.settings.menu != blank %}
+          {% assign menu_links = section.settings.menu.links %}
+          {% if menu_links == blank and linklists[section.settings.menu] %}
+            {% assign menu_links = linklists[section.settings.menu].links %}
+          {% endif %}
+          {% for link in menu_links %}
+            <li>
+              <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li><a href="/collections/all">Shop</a></li>
+          <li><a href="/account">Account</a></li>
+          <li><a href="/blogs/news">Blog</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <a class="btn btn--outline" href="{{ routes.account_url }}">{{ section.settings.account_label }}</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_accent",
+      "label": "Logo accent text",
+      "default": "Soft"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo trailing text",
+      "default": "but Savage"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Account button label",
+      "default": "My Account"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

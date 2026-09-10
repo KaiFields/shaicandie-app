@@ -1,0 +1,150 @@
+<section class="featured-products" id="shop" aria-labelledby="shop-title-{{ section.id }}">
+  <div class="container">
+    <div class="section-heading">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="shop-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.button_label != blank %}
+        <a class="btn btn--ghost" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+    <div class="card-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% assign product = all_products[block.settings.product] %}
+          <article class="card" {{ block.shopify_attributes }}>
+            {% if block.settings.tag != blank %}
+              <div class="card__tag">{{ block.settings.tag }}</div>
+            {% endif %}
+            {% if product %}
+              <h3>{{ product.title }}</h3>
+              {% if product.description != blank %}
+                <p>{{ product.description | strip_html | truncate: 120 }}</p>
+              {% endif %}
+              <a class="btn btn--primary" href="{{ product.url }}">{{ block.settings.button_text }}</a>
+            {% else %}
+              <h3>{{ block.settings.fallback_title }}</h3>
+              {% if block.settings.fallback_body != blank %}
+                <p>{{ block.settings.fallback_body }}</p>
+              {% endif %}
+              {% if block.settings.button_text != blank and block.settings.fallback_link != blank %}
+                <a class="btn btn--primary" href="{{ block.settings.fallback_link }}">{{ block.settings.button_text }}</a>
+              {% endif %}
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="card">
+          <div class="card__tag">New Moon</div>
+          <h3>Celestial Silk Wrap</h3>
+          <p>A luminous silk wrap dyed in nebula gradients to hold your crown in softness and fire.</p>
+          <a class="btn btn--primary" href="/collections/all">Shop now</a>
+        </article>
+        <article class="card">
+          <div class="card__tag">Bestseller</div>
+          <h3>Glow Ritual Kit</h3>
+          <p>Includes candles, crystals, and aroma elixirs curated for re-centering and relaunching your spirit.</p>
+          <a class="btn btn--primary" href="/collections/all">Shop now</a>
+        </article>
+        <article class="card">
+          <div class="card__tag">Limited</div>
+          <h3>Savage Armor Jacket</h3>
+          <p>A vegan leather statement piece lined with satin to remind you softness and strength coexist.</p>
+          <a class="btn btn--primary" href="/collections/all">Shop now</a>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Featured Collections"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Glow gear for the soft & savage"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label",
+      "default": "View all products"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link",
+      "default": "/collections/all"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Add to cart"
+        },
+        {
+          "type": "text",
+          "id": "fallback_title",
+          "label": "Fallback title",
+          "default": "Celestial Silk Wrap"
+        },
+        {
+          "type": "textarea",
+          "id": "fallback_body",
+          "label": "Fallback body",
+          "default": "A luminous silk wrap dyed in nebula gradients to hold your crown in softness and fire."
+        },
+        {
+          "type": "url",
+          "id": "fallback_link",
+          "label": "Fallback link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Featured products",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

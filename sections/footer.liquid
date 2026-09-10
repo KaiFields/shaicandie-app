@@ -1,0 +1,113 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a class="logo" href="{{ routes.root_url }}">
+        <span class="logo__accent">{{ section.settings.logo_accent }}</span>
+        {{ section.settings.logo_text }}
+      </a>
+      {% if section.settings.body != blank %}
+        <p>{{ section.settings.body }}</p>
+      {% endif %}
+    </div>
+    <div class="site-footer__links">
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }}>
+          <h3>{{ block.settings.heading }}</h3>
+          {% assign menu_setting = block.settings.menu %}
+          {% assign menu_links = menu_setting.links %}
+          {% if menu_links == blank %}
+            {% assign menu_handle = menu_setting.handle | default: menu_setting %}
+            {% if menu_handle != blank and linklists[menu_handle] %}
+              {% assign menu_links = linklists[menu_handle].links %}
+            {% endif %}
+          {% endif %}
+          {% if menu_links != blank %}
+            <ul>
+              {% for link in menu_links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% elsif block.settings.custom_links != blank %}
+            <ul>
+              {% for item in block.settings.custom_links | split: '\n' %}
+                {% assign parts = item | split: '|' %}
+                {% assign item_label = parts[0] | strip %}
+                {% assign item_link = parts[1] | default: parts[0] | strip %}
+                <li><a href="{{ item_link }}">{{ item_label }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <p class="site-footer__legal">&copy; <span id="current-year">{{ 'now' | date: '%Y' }}</span> {{ section.settings.legal_text | replace: '{shop_name}', shop.name }}</p>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_accent",
+      "label": "Logo accent text",
+      "default": "Soft"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo trailing text",
+      "default": "but Savage"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Intro text",
+      "default": "Where the Shaicandie Rebirth Lounge celebrates the duality within every creative soul."
+    },
+    {
+      "type": "text",
+      "id": "legal_text",
+      "label": "Legal text",
+      "default": "Soft but Savage — The Shaicandie Rebirth Lounge. All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Explore"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_links",
+          "label": "Custom links",
+          "info": "Optional fallback list. Enter one link per line using Label|URL."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "menu" },
+        { "type": "menu" },
+        { "type": "menu" }
+      ]
+    }
+  ]
+}
+{% endschema %}

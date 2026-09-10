@@ -1,0 +1,131 @@
+<section class="events" id="events" aria-labelledby="events-title-{{ section.id }}">
+  <div class="container events__inner">
+    <div class="events__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="events-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.body != blank %}
+        <p>{{ section.settings.body }}</p>
+      {% endif %}
+    </div>
+    <ul class="events__list">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <span class="events__date">{{ block.settings.date }}</span>
+            <div>
+              <h3>{{ block.settings.title }}</h3>
+              {% if block.settings.description != blank %}
+                <p>{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+            {% if block.settings.button_label != blank %}
+              <a class="btn btn--outline" href="{{ block.settings.button_link }}">{{ block.settings.button_label }}</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <li>
+          <span class="events__date">Jun 23</span>
+          <div>
+            <h3>Fire &amp; Flow Breathwork</h3>
+            <p>Virtual session guiding you through breath alchemy and embodied affirmation.</p>
+          </div>
+          <a class="btn btn--outline" href="/pages/events">Reserve</a>
+        </li>
+        <li>
+          <span class="events__date">Jul 14</span>
+          <div>
+            <h3>Soft Savage Styling Lab</h3>
+            <p>An intimate NYC salon styling your aura with our summer capsule collection.</p>
+          </div>
+          <a class="btn btn--outline" href="/pages/events">Reserve</a>
+        </li>
+        <li>
+          <span class="events__date">Aug 05</span>
+          <div>
+            <h3>Phoenix Rising Retreat</h3>
+            <p>Three-day desert immersion with meditations, moonlit rituals, and private fittings.</p>
+          </div>
+          <a class="btn btn--outline" href="/pages/events">Reserve</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Events",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Upcoming Experiences"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Live circles to ignite your next chapter"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Step into immersive workshops, pop-up lounges, and sacred sound baths. Everything we do is designed to crown you in light."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Event",
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Jun 23"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Fire & Flow Breathwork"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Virtual session guiding you through breath alchemy and embodied affirmation."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Reserve"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "default": "/pages/events"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Events",
+      "blocks": [
+        { "type": "event" },
+        { "type": "event" },
+        { "type": "event" }
+      ]
+    }
+  ]
+}
+{% endschema %}

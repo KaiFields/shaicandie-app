@@ -1,0 +1,209 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "The Shaicandie Rebirth Lounge",
+        "heading": "Soft hues. Savage energy. Rebirth begins here.",
+        "body": "Immerse yourself in a cosmic sanctuary that embraces both your velvet heart and your fierce ambition. From luxurious self-care rituals to unapologetic statement pieces, we curate everything you need to glow differently.",
+        "primary_label": "Explore the Collection",
+        "primary_link": "/collections/all",
+        "secondary_label": "Join the Lounge",
+        "secondary_link": "/account/register",
+        "image": "",
+        "image_alt": ""
+      }
+    },
+    "pillars": {
+      "type": "pillars",
+      "settings": {
+        "heading": "Designed for your soft & savage rituals"
+      },
+      "blocks": {
+        "pillar-1": {
+          "type": "pillar",
+          "settings": {
+            "title": "Curated Shopping",
+            "body": "Discover limited-run drops, bespoke creations, and ritual kits that channel your glow. Every product is intentionally sourced and ethically crafted.",
+            "link_label": "Shop the latest",
+            "link": "/collections/all"
+          }
+        },
+        "pillar-2": {
+          "type": "pillar",
+          "settings": {
+            "title": "Members-Only Accounts",
+            "body": "Unlock rewards, track your journey, and access private lounges with a membership account tuned to your inner alchemy.",
+            "link_label": "Create your account",
+            "link": "/account/register"
+          }
+        },
+        "pillar-3": {
+          "type": "pillar",
+          "settings": {
+            "title": "Storytelling & Community",
+            "body": "Stay inspired with blog features, astrology notes, and behind-the-flame exclusives from the Shaicandie collective.",
+            "link_label": "Browse the blog",
+            "link": "/blogs/news"
+          }
+        }
+      },
+      "block_order": ["pillar-1", "pillar-2", "pillar-3"]
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Featured Collections",
+        "heading": "Glow gear for the soft & savage",
+        "button_label": "View all products",
+        "button_link": "/collections/all"
+      },
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "tag": "New Moon",
+            "button_text": "Add to cart",
+            "fallback_title": "Celestial Silk Wrap",
+            "fallback_body": "A luminous silk wrap dyed in nebula gradients to hold your crown in softness and fire.",
+            "fallback_link": "/collections/all"
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "tag": "Bestseller",
+            "button_text": "Add to cart",
+            "fallback_title": "Glow Ritual Kit",
+            "fallback_body": "Includes candles, crystals, and aroma elixirs curated for re-centering and relaunching your spirit.",
+            "fallback_link": "/collections/all"
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "tag": "Limited",
+            "button_text": "Add to cart",
+            "fallback_title": "Savage Armor Jacket",
+            "fallback_body": "A vegan leather statement piece lined with satin to remind you softness and strength coexist.",
+            "fallback_link": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["product-1", "product-2", "product-3"]
+    },
+    "membership": {
+      "type": "membership",
+      "settings": {
+        "eyebrow": "Membership",
+        "heading": "Your portal to members-only rebirths",
+        "body": "Access personalized playlists, live sessions, and an intimate community forum. Track your purchases, save rituals, and earn rewards every time you show up for yourself.",
+        "enable_form": true,
+        "button_label": "Create account",
+        "tier_label": "Choose your tier",
+        "tier_options": "Ember — Starter Access|Ember — Starter Access\nFlare — Community Circle|Flare — Community Circle\nPhoenix — Elite Experiences|Phoenix — Elite Experiences",
+        "require_terms": true,
+        "terms_label": "I agree to the Soft but Savage terms.",
+        "success_message": "Welcome to the Rebirth Lounge. Check your email to activate your account."
+      },
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Personal dashboards to follow your transformation cycles"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Exclusive access to drops, salons, and live streams"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Tiered rewards — from Ember to Phoenix statuses"
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"]
+    },
+    "blog": {
+      "type": "blog",
+      "settings": {
+        "blog": "",
+        "article_count": 3,
+        "eyebrow": "On the Journal",
+        "heading": "Stories from the Rebirth Lounge",
+        "button_label": "View all posts",
+        "button_link": "/blogs/news",
+        "read_more_label": "Read more"
+      }
+    },
+    "events": {
+      "type": "events",
+      "settings": {
+        "eyebrow": "Upcoming Experiences",
+        "heading": "Live circles to ignite your next chapter",
+        "body": "Step into immersive workshops, pop-up lounges, and sacred sound baths. Everything we do is designed to crown you in light."
+      },
+      "blocks": {
+        "event-1": {
+          "type": "event",
+          "settings": {
+            "date": "Jun 23",
+            "title": "Fire & Flow Breathwork",
+            "description": "Virtual session guiding you through breath alchemy and embodied affirmation.",
+            "button_label": "Reserve",
+            "button_link": "/pages/events"
+          }
+        },
+        "event-2": {
+          "type": "event",
+          "settings": {
+            "date": "Jul 14",
+            "title": "Soft Savage Styling Lab",
+            "description": "An intimate NYC salon styling your aura with our summer capsule collection.",
+            "button_label": "Reserve",
+            "button_link": "/pages/events"
+          }
+        },
+        "event-3": {
+          "type": "event",
+          "settings": {
+            "date": "Aug 05",
+            "title": "Phoenix Rising Retreat",
+            "description": "Three-day desert immersion with meditations, moonlit rituals, and private fittings.",
+            "button_label": "Reserve",
+            "button_link": "/pages/events"
+          }
+        }
+      },
+      "block_order": ["event-1", "event-2", "event-3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Stay in the glow",
+        "heading": "Get the Rebirth dispatch",
+        "body": "Soft notes of encouragement, savage drops, and cosmic invitations delivered weekly.",
+        "label": "Email address",
+        "placeholder": "you@example.com",
+        "button_label": "Subscribe",
+        "success_message": "Thank you for subscribing!"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "pillars",
+    "featured",
+    "membership",
+    "blog",
+    "events",
+    "newsletter"
+  ]
+}

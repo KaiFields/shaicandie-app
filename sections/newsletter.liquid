@@ -1,0 +1,93 @@
+<section class="newsletter" id="contact" aria-labelledby="newsletter-title-{{ section.id }}">
+  <div class="container newsletter__inner">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="newsletter-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.body != blank %}
+        <p>{{ section.settings.body }}</p>
+      {% endif %}
+    </div>
+    {% form section.id, class: 'newsletter__form' %}
+        {% if form.posted_successfully? %}
+          <p class="form-success">{{ section.settings.success_message }}</p>
+        {% else %}
+          {% if form.errors %}
+            <div class="form-errors" role="alert">
+              <p>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</p>
+            </div>
+          {% endif %}
+          <label class="sr-only" for="NewsletterEmail-{{ section.id }}">{{ section.settings.label }}</label>
+          <input id="NewsletterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ section.settings.placeholder }}" required>
+          <button class="btn btn--primary" type="submit">{{ section.settings.button_label }}</button>
+        {% endif %}
+      {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Stay in the glow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get the Rebirth dispatch"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Soft notes of encouragement, savage drops, and cosmic invitations delivered weekly."
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Email label",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "you@example.com"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you for subscribing!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% form 'customer', id: 'NewsletterForm-' | append: section.id, class: 'newsletter__form'
+    %}"
+  to: "{% form section.id, class: 'newsletter__form' %}"
+  position: 484..532
+{% endcomment %}

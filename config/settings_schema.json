@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "color",
+        "id": "gradient_start",
+        "label": "Background gradient start",
+        "default": "#140d1f"
+      },
+      {
+        "type": "color",
+        "id": "gradient_end",
+        "label": "Background gradient end",
+        "default": "#301337"
+      },
+      {
+        "type": "color",
+        "id": "accent",
+        "label": "Accent color",
+        "default": "#c75b7a"
+      },
+      {
+        "type": "color",
+        "id": "accent_strong",
+        "label": "Accent strong color",
+        "default": "#ffd6a5"
+      }
+    ]
+  }
+]
