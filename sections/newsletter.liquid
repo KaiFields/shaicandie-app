@@ -9,7 +9,7 @@
         <p>{{ section.settings.body }}</p>
       {% endif %}
     </div>
-    {% form 'customer', id: 'NewsletterForm-' | append: section.id, class: 'newsletter__form' %}
+    {% form section.id, class: 'newsletter__form' %}
         {% if form.posted_successfully? %}
           <p class="form-success">{{ section.settings.success_message }}</p>
         {% else %}
@@ -80,3 +80,14 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% form 'customer', id: 'NewsletterForm-' | append: section.id, class: 'newsletter__form'
+    %}"
+  to: "{% form section.id, class: 'newsletter__form' %}"
+  position: 484..532
+{% endcomment %}
